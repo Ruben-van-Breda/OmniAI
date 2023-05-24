@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+  broker:
+    build: omni-broker
+    ports:
+      - 8081:8081
+    environment:
+      - ENDPOINTS=http://chatbot1:8083/chat/ http://chatbot2:8084/chat/ http://chatbot3:8086/chat/ http://chatbot4:8087/chat/
+      
+  web-client:
+    build: omni-client-web
+    ports:
+      - 8085:8085
+
+  chatbot1:
+    build: omni-integration-davinci
+    env_file:
+      - api-keys.txt
+    ports:
+      - 8083:8083
+  chatbot2:
+    build: omni-integration-turbo
+    env_file:
+      - api-keys.txt
+    ports:
+      - 8084:8084
+  chatbot3:
+    build: omni-integration-picasso
+    env_file:
+      - api-keys.txt
+    ports:
+      - 8086:8086
+  chatbot4:
+    build: omni-integration-pollock
+    env_file:
+      - api-keys.txt
+    ports:
+      - 8087:8087

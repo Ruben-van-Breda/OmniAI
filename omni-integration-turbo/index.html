@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Go Web Application</title>
+</head>
+<body>
+    <h1>Go Web Application</h1>
+    <form method="post">
+        <label for="input">Enter input:</label>
+        <input type="text" id="input" name="input">
+        <button type="submit">Submit</button>
+    </form>
+
+    {{if .Result}}
+    <h2>Output:</h2>
+    <p>{{.Result}}</p>
+    {{end}}
+</body>
+</html>

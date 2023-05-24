@@ -1,0 +1,397 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: broker
+  name: broker
+spec:
+  ports:
+    - name: "8081"
+      port: 8081
+      targetPort: 8081
+  selector:
+    io.kompose.service: broker
+status:
+  loadBalancer: {}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: chatbot1
+  name: chatbot1
+spec:
+  ports:
+    - name: "8083"
+      port: 8083
+      targetPort: 8083
+  selector:
+    io.kompose.service: chatbot1
+status:
+  loadBalancer: {}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: chatbot2
+  name: chatbot2
+spec:
+  ports:
+    - name: "8084"
+      port: 8084
+      targetPort: 8084
+  selector:
+    io.kompose.service: chatbot2
+status:
+  loadBalancer: {}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: chatbot3
+  name: chatbot3
+spec:
+  ports:
+    - name: "8086"
+      port: 8086
+      targetPort: 8086
+  selector:
+    io.kompose.service: chatbot3
+status:
+  loadBalancer: {}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: chatbot4
+  name: chatbot4
+spec:
+  ports:
+    - name: "8087"
+      port: 8087
+      targetPort: 8087
+  selector:
+    io.kompose.service: chatbot4
+status:
+  loadBalancer: {}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: web-client
+  name: web-client
+spec:
+  ports:
+    - name: "8085"
+      port: 8085
+      targetPort: 8085
+  selector:
+    io.kompose.service: web-client
+status:
+  loadBalancer: {}
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: broker
+  name: broker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: broker
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.network/omni-default: "true"
+        io.kompose.service: broker
+    spec:
+      containers:
+        - env:
+            - name: ENDPOINTS
+              value: http://chatbot1:8083/chat/ http://chatbot2:8084/chat/ http://chatbot3:8086/chat/ http://chatbot4:8087/chat/
+          image: omni-broker:latest
+          imagePullPolicy: Never
+          name: broker
+          ports:
+            - containerPort: 8081
+          resources: {}
+      restartPolicy: Always
+status: {}
+
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  creationTimestamp: null
+  name: omni-default
+spec:
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              io.kompose.network/omni-default: "true"
+  podSelector:
+    matchLabels:
+      io.kompose.network/omni-default: "true"
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: chatbot1
+  name: chatbot1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: chatbot1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.network/omni-default: "true"
+        io.kompose.service: chatbot1
+    spec:
+      containers:
+        - env:
+            - name: DAVINCI
+              valueFrom:
+                secretKeyRef:
+                  key: DAVINCI
+                  name: api-keys
+            - name: PICASSO
+              valueFrom:
+                secretKeyRef:
+                  key: PICASSO
+                  name: api-keys
+            - name: POLLOCK
+              valueFrom:
+                secretKeyRef:
+                  key: POLLOCK
+                  name: api-keys
+            - name: TURBO
+              valueFrom:
+                secretKeyRef:
+                  key: TURBO
+                  name: api-keys
+          image: omni-chatbot1:latest
+          imagePullPolicy: Never
+          name: chatbot1
+          ports:
+            - containerPort: 8083
+          resources: {}
+      restartPolicy: Always
+status: {}
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: chatbot2
+  name: chatbot2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: chatbot2
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.network/omni-default: "true"
+        io.kompose.service: chatbot2
+    spec:
+      containers:
+        - env:
+            - name: DAVINCI
+              valueFrom:
+                secretKeyRef:
+                  key: DAVINCI
+                  name: api-keys
+            - name: PICASSO
+              valueFrom:
+                secretKeyRef:
+                  key: PICASSO
+                  name: api-keys
+            - name: POLLOCK
+              valueFrom:
+                secretKeyRef:
+                  key: POLLOCK
+                  name: api-keys
+            - name: TURBO
+              valueFrom:
+                secretKeyRef:
+                  key: TURBO
+                  name: api-keys
+          image: omni-chatbot2:latest
+          imagePullPolicy: Never
+          name: chatbot2
+          ports:
+            - containerPort: 8084
+          resources: {}
+      restartPolicy: Always
+status: {}
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: chatbot3
+  name: chatbot3
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: chatbot3
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.network/omni-default: "true"
+        io.kompose.service: chatbot3
+    spec:
+      containers:
+        - env:
+            - name: DAVINCI
+              valueFrom:
+                secretKeyRef:
+                  key: DAVINCI
+                  name: api-keys
+            - name: PICASSO
+              valueFrom:
+                secretKeyRef:
+                  key: PICASSO
+                  name: api-keys
+            - name: POLLOCK
+              valueFrom:
+                secretKeyRef:
+                  key: POLLOCK
+                  name: api-keys
+            - name: TURBO
+              valueFrom:
+                secretKeyRef:
+                  key: TURBO
+                  name: api-keys
+          image: omni-chatbot3:latest
+          imagePullPolicy: Never
+          name: chatbot3
+          ports:
+            - containerPort: 8086
+          resources: {}
+      restartPolicy: Always
+status: {}
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: chatbot4
+  name: chatbot4
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: chatbot4
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.network/omni-default: "true"
+        io.kompose.service: chatbot4
+    spec:
+      containers:
+        - env:
+            - name: DAVINCI
+              valueFrom:
+                secretKeyRef:
+                  key: DAVINCI
+                  name: api-keys
+            - name: PICASSO
+              valueFrom:
+                secretKeyRef:
+                  key: PICASSO
+                  name: api-keys
+            - name: POLLOCK
+              valueFrom:
+                secretKeyRef:
+                  key: POLLOCK
+                  name: api-keys
+            - name: TURBO
+              valueFrom:
+                secretKeyRef:
+                  key: TURBO
+                  name: api-keys
+          image: omni-chatbot4:latest
+          imagePullPolicy: Never
+          name: chatbot4
+          ports:
+            - containerPort: 8087
+          resources: {}
+      restartPolicy: Always
+status: {}
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: web-client
+  name: web-client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: web-client
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.network/omni-default: "true"
+        io.kompose.service: web-client
+    spec:
+      containers:
+        - image: omni-web-client:latest
+          imagePullPolicy: Never
+          name: web-client
+          ports:
+            - containerPort: 8085
+          resources: {}
+      restartPolicy: Always
+
+status: {}

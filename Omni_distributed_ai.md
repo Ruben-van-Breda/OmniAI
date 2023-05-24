@@ -1,0 +1,19 @@
+# Title: Omni: Leveraging Multiple AI Sources for Text and Image Generation
+
+## Abstract:
+Omni is a distributed AI platform that allows users to input a prompt and receive diverse and creative outputs generated from multiple AI services. We implemented the project using Docker and Kubernetes deployment for fault tolerance and scalability. The platform consists of loosely coupled microservices that follow the SoC principle, separating business logic and user-facing logic. Communication between the services follows the REST architecture. Omni can be accessed through a command-line interface or a web-based GUI. The platform includes AI services such as Davinci, Pollock, and Turbo for generating text and image responses. Our project demonstrates the potential of combining multiple AI sources to generate diverse and creative outputs for a given input.
+
+## Introduction:
+The goal of the project is to create a distributed AI platform that combines multiple AI sources to generate creative and diverse outputs for a given input. The platform leverages the Kubernetes deployment for scalability and fault tolerance. The project implements loosely coupled microservices that follow the SoC principle, separating business logic and user-facing logic. The platform can be accessed through a command-line interface or a web-based GUI. The platform includes AI services such as Davinci, Pollock, and Turbo for generating text and image responses.
+
+## Technology Stack:
+The platform uses Docker to create isolated containers for microservices. Kubernetes is used for container orchestration, service discovery, scaling, and load balancing. Java is the primary programming language used for the backend structure, using Spring Boot for the client webpage. Python is used for the Davinci and Picasso AI services, while Node JS is used for the Pollock AI service. GO is used for the Turbo AI service. The project uses Maven for software project management and packaging services for Java.
+
+## System Overview:
+The platform consists of several microservices, including omni-core, omni-broker, omni-client, omni-client-web, omni-integration-davinci, omni-integration-picasso, omni-integration-pollock, and omni-integration-turbo. The omni-broker service acts as an intermediary between user-facing clients and Kubernetes Clusters. It makes requests to all known applicable pods and accumulates the response from different AI services. The omni-client and omni-client-web services provide a command-line interface and a web-based GUI for users to interact with the platform. The AI services, including Davinci, Picasso, Pollock, and Turbo, return text or image responses to given prompts.
+
+# Contributions:
+Each team member contributed to the project in various ways. Ruben created the Davinci bot, added image support to the web application, and contributed to general programming tasks. Oisin implemented the Kubernetes deployment and contributed to the omni-core and omni-broker services. Kamil developed the Pollock AI service and contributed to general programming tasks. Dawid implemented the Turbo AI service and contributed to the omni-core service.
+
+# Reflections:
+One of the key challenges we faced was managing the API keys for different AI services. We overcame this challenge by using environment variables to store the API keys and created a centralized configuration file. Another challenge was ensuring fault tolerance and scalability, which we addressed by implementing the Kubernetes deployment. The project provided valuable experience working with microservices, containerization, and Kubernetes deployment. We learned the importance of communication and collaboration when working in a team and the significance of following best practices in software development.
