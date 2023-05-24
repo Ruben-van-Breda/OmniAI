@@ -1,13 +1,11 @@
 # COMP30220 Team Omni
-## Team Members
-- Dawid Skraba
-- Ruben Ewout van Breda
-- Oisin Mc Menamin
-- Kamil Michalski
+
 
 
 This project is a distributed system that is designed to provide the user with response from four different models of ChatGPT when the user enters a prompt. The user can decide if they want to submit the prompt to get a text or an image response.
+![Alt text](OmniAI_results.png)
 
+![Alt text](OmniAI_results_images.png)
 ### link to the video showcasing the project: https://gitlab.com/ucd-cs-rem/comp30220-2023/omni/-/blob/main/Omni-Video-presentation.mp4
 
 ### link to the report: https://gitlab.com/ucd-cs-rem/comp30220-2023/omni/-/blob/main/Omni_Report.docx
@@ -45,3 +43,9 @@ Before running the batch/shell scripts, make sure that the `api-keys.txt` file i
 If using `run.sh` or `run.bat`. Go to the web interface at: `http://localhost:8085/`
 
 If `run_kube.bat` or `run_kube.sh` was used, the command-prompt/terminal will output the address of the web client and in most cases will automatically open the web-client in the browser.
+
+## Team Members
+- Ruben Ewout van Breda
+- Dawid Skraba
+- Oisin Mc Menamin
+- Kamil Michalski
